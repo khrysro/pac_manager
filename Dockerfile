@@ -7,7 +7,7 @@ ENV PAC_VER=pac-4.5.5.7
 ENV PAC_DEB=pac-${PAC_VERSION}-all.deb
 
 
-RUN curl -s ${PAC_URL}/raw/master/packages/${PAC_DEB} -o /tmp/
+RUN wget ${PAC_URL}/raw/master/packages/${PAC_DEB}
 
 #ADD ${PAC_URL}/raw/master/packages/${PAC_DEB} /tmp/
 
