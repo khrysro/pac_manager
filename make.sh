@@ -1,18 +1,21 @@
 #!/bin/bash
 
+USER=$(sudo who | awk '{print $1}')
+
 if [ $(whoami) != "root" ]
 then
 	echo "*******************************"
-	echo "You moust run $0 as user 'root'"
+	echo "You moust run $0 as sudo user 'root'"
 	echo "*******************************"
 	exit 1;
 fi
 
-cd /opt/david/pac
+
+cd /opt/${USER}/pac
 rm -rf pac/
 cp pac.list pacmanager-code/pac.list
 cp -r pacmanager-code/ pac/
-find /opt/david/pac/pac -name "*.svn" | xargs rm -rf
+find /opt/${USER}/pac/pac -name "*.svn" | xargs rm -rf
 
 # Get version from PACUtils.pm module
 V=$(grep "our \$APPVERSION" pac/lib/PACUtils.pm | awk -F"'" '{print $2;}')
@@ -40,7 +43,7 @@ then
 fi
 mv pac.list.new pac.list
 cp pac.list make.sh pac/
-chown -R david:david pac/
+chown -R ${USER}:${USER} pac/
 
 # .tar.gz
 echo "----------------------------------------------"
@@ -48,7 +51,7 @@ echo " - Creating '.tar.gz' package for PAC ${V}..."
 echo "----------------------------------------------"
 echo ""
 tar -czf pac-${V}-all.tar.gz pac
-chown david:david pac-${V}-all.tar.gz
+chown ${USER}:${USER} pac-${V}-all.tar.gz
 mv pac-${V}-all.tar.gz dist/
 
 # DEB
@@ -67,12 +70,11 @@ mv meta/pac-${V}-meta/DEBIAN/control.new meta/pac-${V}-meta/DEBIAN/control
 echo "Recommends: xtightvncviewer, rdesktop, libgtk2-appindicator-perl, libgtk2-sourceview2-perl, autossh, remote-tty, cu, c3270, mosh" >> meta/pac-${V}-meta/DEBIAN/control
 echo "Section: networking" >> meta/pac-${V}-meta/DEBIAN/control
 echo "Installed-Size: 5000" >> meta/pac-${V}-meta/DEBIAN/control
-echo "Homepage: https://sites.google.com/site/davidtv/" >> meta/pac-${V}-meta/DEBIAN/control
 echo "Provides: pac" >> meta/pac-${V}-meta/DEBIAN/control
 echo "Priority: optional" >> meta/pac-${V}-meta/DEBIAN/control
 
 dpkg -D1 -b meta/pac-${V}-meta pac-${V}-all.deb
-chown david:david pac-${V}-all.deb
+chown ${USER}:${USER} pac-${V}-all.deb
 mv pac-${V}-all.deb dist/
 
 # RPM
@@ -110,5 +112,5 @@ ls -lF dist/
 
 # Empty temp dir
 rm -rf meta
-rm -rf /home/david/rpmbuild
-rm -rf /opt/david/pac/pac
+rm -rf /home/${USER}/rpmbuild
+rm -rf /opt/${USER}/pac/pac
