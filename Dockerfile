@@ -1,4 +1,4 @@
-FROM khrysro/ubuntu-sshd:16.04
+FROM khrysro/ubuntu-sshd
 MAINTAINER KhrysRo "https://github.com/khrysro"
 
 RUN apt-get update
