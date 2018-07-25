@@ -16,8 +16,8 @@ RUN cd /tmp \
 RUN curl -s ${PAC_URL}/master/packages/${PAC_DEB} -o /tmp/${PAC_DEB}
 #ADD ${PAC_URL}/master/packages/${PAC_DEB} /tmp/
 
-RUN apt-get update
-RUN apt install -y /tmp/${PAC_DEB}
 
+RUN  dpkg -i /tmp/${PAC_DEB}
+RUN apt-get install -f
 
 EXPOSE  22
