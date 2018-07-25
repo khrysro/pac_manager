@@ -6,7 +6,7 @@ MAINTAINER KhrysRo "https://github.com/khrysro"
 ENV PAC_URL=https://raw.githubusercontent.com/khrysro/pac_manager
 
 ENV PAC_VER=4.5.5.7
-ENV PAC_DEB=pac-${PAC_VERSION}-all.deb
+ENV PAC_DEB=pac-${PAC_VER}-all.deb
 
 RUN cd /tmp \
 && apt-get update \
