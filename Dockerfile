@@ -17,10 +17,10 @@ RUN curl -s ${PAC_URL}/master/packages/${PAC_DEB} -o /tmp/${PAC_DEB}
 #ADD ${PAC_URL}/master/packages/${PAC_DEB} /tmp/
 
 
-RUN  dpkg -i /tmp/${PAC_DEB}
+#RUN  dpkg -i /tmp/${PAC_DEB}
 
-RUN apt-get install -y -f
-
-RUN  dpkg -i /tmp/${PAC_DEB}
+#RUN apt-get install -y -f
+RUN apt-get install -y  /tmp/${PAC_DEB}
+#RUN  dpkg -i /tmp/${PAC_DEB}
 
 EXPOSE  22
